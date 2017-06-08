@@ -9,8 +9,8 @@ select
 	max(case when `result`.`key` = 'first_name' then `result`.`value` else null end) as `First Name`,
 	max(case when `result`.`key` = 'last_name' then `result`.`value` else null end) as `Last Name`,
 	email as `Email Addess`,
-	max(case when `result`.`key` = 'home' then `result`.`value` else null end) as `Home Phone Number`,
-	max(case when `result`.`key` = 'mobile' then `result`.`value` else null end) as `Mobile Phone Number`,
+	max(case when `result`.`key` = 'home' or `result`.`key` = 'phone.home'  then `result`.`value` else null end) as `Home Phone Number`,
+	max(case when `result`.`key` = 'mobile' or `result`.`key` = 'phone.mobile'  then `result`.`value` else null end) as `Mobile Phone Number`,
 	max(case when `result`.`key` = 'gender' then
 			(case `result`.`value` when '0' then 'Male' when '1' then 'Female' else 'Unknow' end)
 		else null end) as `Gender`,
