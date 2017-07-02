@@ -11,7 +11,7 @@ select
 	p.name,
 	p.document_url,
 	p.document_name ,
-	replace(p.document_path, '/home/ubuntu/jba/public', 'open.joybusinessacademy.com') as document_path,
+	concat('open.joybusinessacademy.com/pitches/', p.id, '/download') as 'document_path',
 	p.status,
 	p.user_feedback ,
 	p.recipient_feedback,
