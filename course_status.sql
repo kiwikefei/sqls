@@ -14,5 +14,5 @@ join users u on uc.user_id = u.id
 join instances i on u.instance_id = i.id
 join courses c on uc.course_id = c.id
 where 
-	uc.started_at > '2017-07-23 00:00:00' and
+--	uc.started_at > '2017-07-23 00:00:00' and
 	u.id > 15535 
