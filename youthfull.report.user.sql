@@ -33,16 +33,27 @@ select
 		 	end else null end) as `Current Situation`,
 	max(case when `ua`.`key` = 'last_school' then (select `name` from schools where id=`ua`.`value`) else null end) as `Last School Attended`,
 	max(case when `ua`.`key` = 'last_school_year' then `ua`.`value` else null end) as `Last School Attended Date`,
-	count(uc.started_at) as `Courses Started`,
-	count(uc.completed_at) as `Courses Completed`,
-	count(p.id) as `Pitches`
+	(select count(started_at) from user_courses where user_id = u.id) as `Started Courses`,
+	(select count(completed_at) from user_courses where user_id = u.id) as `Completed Courses`,	
+	(select count(id) from pitches where user_id = u.id) as `Pitches`,
+	max(case when `ua`.`key` = 'current_situation' then case `ua`.`value`
+		when '6' then 'Job Seeker Benefit'
+		when '7' then 'YPP Youth Benefit'
+		when '8' then 'Paid Employment (Full Time)'
+		when '9' then 'Paid Employment (Part Time)'
+		when '10' then 'Employment Unpaid (Volunteer)'
+		when '11' then 'Training - Private Training Organisation'
+		when '12' then 'Youth Service Provider'
+	end else null end) as `Opportunity Status`,
+	(select count(id) from pitches where user_id=u.id and `status` = 'Accepted') as `Pitches Accepted`,
+	u.created_at as `Date Registered`
 from users u
 join user_attributes ua on u.id = ua.user_id
-left join pitches p on u.id = p.user_id
-left join user_courses uc on u.id = uc.user_id
 where 
 	u.instance_id=3
 group by u.id
+
+
 
 
 
